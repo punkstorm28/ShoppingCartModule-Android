@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="5dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:layout_weight="9"
+            android:id="@+id/product_name_textview"
+            android:text="Name of the product"
+            android:paddingTop="7dp"
+            android:paddingLeft="7dp"
+            android:textSize="18sp"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:layout_weight="1"
+            android:id="@+id/delete_product_imageview"
+            android:paddingTop="7dp"
+            android:src="@drawable/redcross"
+            android:layout_marginRight="5dp"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="375dp"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:ellipsize="none"
+        android:maxLines="100"
+        android:textColor="#7e7e7e"
+        android:scrollHorizontally="false"
+        android:id="@+id/product_description_textview"
+        android:textSize="13sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/quantity_update_border"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:textColor="#329b1a"
+                android:text="-"
+                android:layout_marginTop="-2dp"
+                android:textSize="27sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/reduce_product_count_textview"
+                />
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="#329b1a"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#329b1a"
+                android:textSize="18sp"
+                android:layout_marginTop="0dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="1"
+                android:id="@+id/current_product_quantity_textview"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="#329b1a"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:textColor="#329b1a"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="+"
+                android:textSize="21sp"
+                android:layout_marginTop="0dp"
+                android:id="@+id/increase_product_count_textview" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:id="@+id/product_rate_textview"
+            android:text="x $9.80"
+            android:paddingTop="7dp"
+            android:paddingLeft="7dp"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:id="@+id/product_price_textview"
+            android:padding="7dp"
+            android:text="$9.80"
+            android:paddingTop="7dp"
+            android:paddingLeft="7dp"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#aeaeae" />
+</LinearLayout>
