@@ -5,6 +5,8 @@ import rx.Single;
 
 /**
  * Created by vyomkeshjha on 12/4/17.
+ * Reactive stream return types to ensure that the return happens only after server response
+ * Change this to the user's requirements
  */
 
 public class ShoppingCartImpl<T> extends ShoppingCartAbstractList<T> {
@@ -29,18 +31,23 @@ public class ShoppingCartImpl<T> extends ShoppingCartAbstractList<T> {
     }
 
     @Override
-    public Single getItemFromCart(T item) {
-        return null;
+    public T getItemFromCart(int position) {
+        return get(position);
     }
 
     @Override
-    public Single<Integer> getNumberOfItemsInCart() {
-        return null;
+    public int getProductQuantity(T product) {
+        return 0;
     }
 
     @Override
-    public Single<Integer> getNumberOfProductsInCart() {
-        return null;
+    public int getNumberOfItemsInCart() {
+        return super.getNumberOfItemsInCart();
+    }
+
+    @Override
+    public int getNumberOfProductsInCart() {
+        return size();
     }
 
     @Override

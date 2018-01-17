@@ -10,7 +10,7 @@ import rx.Single;
  * on the remote cart or persistent cart, which in turn may lead to exceptions.
  */
 public interface ShoppingCart<T> {
-    Single<Integer> decreaseItemQuantity(T item);
+    Single<Integer> decreaseItemQuantity(T item);  // to decrease the item count in the cart
     Single<Integer> increaseItemQuantity(T item);
 
     Completable removeItemFromCart(T item);

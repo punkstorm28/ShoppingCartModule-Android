@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="5dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:layout_weight="9"
+            android:id="@+id/product_name_textview"
+            android:text="Name of the product"
+            android:paddingTop="7dp"
+            android:paddingLeft="7dp"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="375dp"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:ellipsize="none"
+        android:maxLines="100"
+        android:textColor="#7e7e7e"
+        android:scrollHorizontally="false"
+        android:id="@+id/product_description_textview"
+        android:textSize="13sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+
+        <TextView
+            android:id="@+id/add_to_cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:padding="7dp"
+            android:paddingLeft="7dp"
+            android:paddingTop="7dp"
+            android:text="+"
+            android:textColor="#000"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#aeaeae" />
+</LinearLayout>

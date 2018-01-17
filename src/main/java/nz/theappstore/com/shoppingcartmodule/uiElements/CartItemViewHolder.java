@@ -35,7 +35,7 @@ public class ProductItemViewHolder extends RecyclerView.ViewHolder {
         reduceProductCountTextView = itemView.findViewById(R.id.reduce_product_count_textview);
         increaseProductCountTextView = itemView.findViewById(R.id.increase_product_count_textview);
         productRateTextView = itemView.findViewById(R.id.product_rate_textview);
-        productPriceTextView = itemView.findViewById(R.id.product_price_textview);
+        productPriceTextView = itemView.findViewById(R.id.add_to_cart);
         removeProductFromCart = itemView.findViewById(R.id.delete_product_imageview);
 
         setupListener();

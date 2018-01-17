@@ -49,8 +49,13 @@ public abstract class ShoppingCartAbstractList<T> extends ArrayList<T> implement
     public int getItemQuantity(T item) {
         if(contains(item)) {
             return quantityMap.get(item);
+
         } else {
             return 0;
         }
+    }
+
+    public int getNumberOfItemsInCart() {
+        return quantityMap.size();
     }
 }

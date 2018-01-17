@@ -118,7 +118,7 @@
             android:textColor="#000"
             android:layout_gravity="end"
             android:gravity="end"
-            android:id="@+id/product_price_textview"
+            android:id="@+id/add_to_cart"
             android:padding="7dp"
             android:text="$9.80"
             android:paddingTop="7dp"
