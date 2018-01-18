@@ -1,6 +1,7 @@
 package nz.theappstore.com.shoppingcartmodule.businessLogic;
 
 import rx.Completable;
+import rx.Observable;
 import rx.Single;
 
 /**
@@ -10,6 +11,7 @@ import rx.Single;
  */
 
 public class ShoppingCartImpl<T> extends ShoppingCartAbstractList<T> {
+
     @Override
     public Single<Integer> decreaseItemQuantity(T item) {
         return null;
@@ -48,6 +50,16 @@ public class ShoppingCartImpl<T> extends ShoppingCartAbstractList<T> {
     @Override
     public int getNumberOfProductsInCart() {
         return size();
+    }
+
+    @Override
+    public Observable<T> getListOfProductsInCart() {
+        return null;
+    }
+
+    @Override
+    public Observable<T> getListOfProducts() {
+        return null;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package nz.theappstore.com.shoppingcartmodule.businessLogic.Contracts;
 
 import rx.Completable;
+import rx.Observable;
 import rx.Single;
 
 /**
@@ -20,6 +21,10 @@ public interface ShoppingCart<T> {
     int getProductQuantity(T product);
     int getNumberOfItemsInCart();
     int getNumberOfProductsInCart();
+
+    Observable<T> getListOfProductsInCart();
+    Observable<T> getListOfProducts();
+
 
     Completable emptyCart();
 }
