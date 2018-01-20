@@ -13,4 +13,5 @@ import rx.Observable;
 
 public interface DataRepository {
     Observable<List<SampleProductEntity>> getProductsList();
+
 }
