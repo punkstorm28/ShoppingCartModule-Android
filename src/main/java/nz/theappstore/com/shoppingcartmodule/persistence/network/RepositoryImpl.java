@@ -1,8 +1,5 @@
 package nz.theappstore.com.shoppingcartmodule.persistence.network;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,9 +18,6 @@ import nz.theappstore.com.shoppingcartmodule.persistence.network.repository.Data
 import nz.theappstore.com.shoppingcartmodule.persistence.network.retrofitServiceInterfaces.CartManagementRequests;
 import nz.theappstore.com.shoppingcartmodule.persistence.network.retrofitServiceInterfaces.UserAuthorizationRequests;
 import nz.theappstore.com.shoppingcartmodule.uiElements.util.SampleProductEntity;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -78,21 +72,22 @@ public class RepositoryImpl implements DataRepository {
 
     @Override
     public Observable<List<SampleProductEntity>> getProductsList() {
-        final Observable<List<SampleProductEntity>> productLiveData = null;
+        return cartManagementRequests.getProductList();
+    }
 
-        Call<List<SampleProductEntity>> leadCall = cartManagementRequests.getProductList();
-        leadCall.enqueue(new Callback<List<SampleProductEntity>>() {
-            @Override
-            public void onResponse(Call<List<SampleProductEntity>> call, Response<List<SampleProductEntity>> response) {
-                //TODO: insert into the stream returned
-            }
+    @Override
+    public Observable<List<SampleProductEntity>> getCartForSession(int sessionId) {
+        return cartManagementRequests.getCurrentCart(sessionId);
+    }
 
-            @Override
-            public void onFailure(Call<List<SampleProductEntity>> call, Throwable t) {
+    @Override
+    public Observable<List<SampleProductEntity>> addItemToCart(int sessionId, int productId) {
+        return cartManagementRequests.addItemToCart(sessionId, productId);
+    }
 
-            }
-        });
-        return productLiveData;
+    @Override
+    public Observable<List<SampleProductEntity>> removeItemFromCart(int sessionId, int productId) {
+        return cartManagementRequests.removeItemFromCart(sessionId, productId);
     }
 
 }

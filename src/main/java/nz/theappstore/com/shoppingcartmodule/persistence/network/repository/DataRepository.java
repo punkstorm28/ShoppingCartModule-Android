@@ -13,5 +13,8 @@ import rx.Observable;
 
 public interface DataRepository {
     Observable<List<SampleProductEntity>> getProductsList();
+    Observable<List<SampleProductEntity>> getCartForSession(int sessionId);
+    Observable<List<SampleProductEntity>> addItemToCart(int sessionId, int productId);
+    Observable<List<SampleProductEntity>> removeItemFromCart(int sessionId, int productId);
 
 }

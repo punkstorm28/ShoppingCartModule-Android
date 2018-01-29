@@ -19,12 +19,13 @@ import nz.theappstore.com.shoppingcartmodule.uiElements.util.SampleProductEntity
 
 public class CartListAdapter extends RecyclerView.Adapter<CartItemViewHolder>{
 
-    ShoppingCart<SampleProductEntity> dataset = new ShoppingCartImpl<>();
+    ShoppingCart<SampleProductEntity> dataset;
 
-    public CartListAdapter(List<SampleProductEntity> datasetParam) {
+    public CartListAdapter(List<SampleProductEntity> datasetParam, int sessionId) {
         for (SampleProductEntity productEntity: datasetParam) {
             dataset.addItemToCart(productEntity); //Adds products to the cart
         }
+        dataset = new ShoppingCartImpl();
     }
 
     @Override
@@ -45,8 +46,6 @@ public class CartListAdapter extends RecyclerView.Adapter<CartItemViewHolder>{
                 setText(dataset.getItemFromCart(position).getProductDescription());
         holder.getProductName().
                 setText(dataset.getItemFromCart(position).getProductName());
-
-
     }
 
     @Override

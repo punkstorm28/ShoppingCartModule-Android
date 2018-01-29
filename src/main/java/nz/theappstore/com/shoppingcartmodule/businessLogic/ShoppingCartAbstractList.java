@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import nz.theappstore.com.shoppingcartmodule.businessLogic.Contracts.ShoppingCart;
+import rx.Observable;
 import rx.subjects.PublishSubject;
 
 /**
@@ -14,20 +15,13 @@ import rx.subjects.PublishSubject;
  */
 public abstract class ShoppingCartAbstractList<T> extends ArrayList<T> implements ShoppingCart<T> {
     private HashMap<T, Integer> quantityMap = new HashMap<>();
-    protected final PublishSubject<ShoppingCartAbstractList<T>> onAdd;  //To return the entire new list when any operation is performed
-
-    ShoppingCartAbstractList() {
-        onAdd = PublishSubject.create();
-    }
     @Override
     public boolean add(T t) {
         if (!contains(t)) {
             quantityMap.put(t, 1);
-            onAdd.onNext(this);  //broadcast the new list to the subscribers
             return super.add(t);
         } else {
             quantityMap.put(t, quantityMap.get(t) + 1);
-            onAdd.onNext(this);  //broadcast the new list to the subscribers
             return false;
         }
     }
@@ -36,16 +30,32 @@ public abstract class ShoppingCartAbstractList<T> extends ArrayList<T> implement
     public T remove(int index) {
         if (quantityMap.containsKey(get(index)))
             quantityMap.remove(get(index));
-        onAdd.onNext(this);  //broadcast the new list to the subscribers
         return super.remove(index);
     }
 
-    @Override
+    @Override //FIXME: remove is reduce in hashmap
     public boolean remove(Object o) {
         if (o != null && quantityMap.containsKey(o))
             quantityMap.remove(o);
-        onAdd.onNext(this);  //broadcast the new list to the subscribers
         return super.remove(o);
+    }
+
+    /**
+     * Reduce Item Quantity for an item in the cart
+     **/
+    public boolean reduce(T t) {
+        if (!contains(t)) {
+            return false;
+        } else {
+            int quantity = quantityMap.get(t) - 1;
+            if(quantity == 0) {
+                remove(t);
+            } else {
+                quantityMap.put(t, quantity);
+                return true;
+            }
+        }
+    return false;
     }
 
     /**
@@ -54,7 +64,6 @@ public abstract class ShoppingCartAbstractList<T> extends ArrayList<T> implement
     public boolean removeAll() {
         quantityMap.clear();
         boolean returnable = super.removeAll(this);
-        onAdd.onNext(this);  //broadcast the new list to the subscribers
         return returnable;
     }
 
@@ -69,4 +78,9 @@ public abstract class ShoppingCartAbstractList<T> extends ArrayList<T> implement
     public int getNumberOfItemsInCart() {
         return quantityMap.size();
     }
+
+    /**
+     * Use this method to observe on the Shopping cart
+     * Returns the list onNext whenever anything changes
+     **/
 }
