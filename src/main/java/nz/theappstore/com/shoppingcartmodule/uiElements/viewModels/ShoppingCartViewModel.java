@@ -4,7 +4,9 @@ import android.arch.lifecycle.ViewModel;
 
 
 import nz.theappstore.com.shoppingcartmodule.businessLogic.ShoppingCartImpl;
+import nz.theappstore.com.shoppingcartmodule.uiElements.util.SampleProductEntity;
 import rx.Observable;
+import rx.subjects.PublishSubject;
 
 /**
  * Created by vyomkeshjha on 12/5/17.
@@ -15,8 +17,12 @@ public class ShoppingCartViewModel extends ViewModel {
     private Observable<ShoppingCartImpl> observableCart;
     private int sessionId;
 
+    ShoppingCartViewModel() {
+
+    }
 
     public ShoppingCartImpl getShoppingCart() {
+
         if (shoppingCart == null) {
             shoppingCart = new ShoppingCartImpl();
             shoppingCart.setSessionId(sessionId);
@@ -38,4 +44,5 @@ public class ShoppingCartViewModel extends ViewModel {
     public void setSessionId(int sessionId) {
         this.sessionId = sessionId;
     }
+
 }

@@ -2,4 +2,8 @@
     <string name="app_name">ShoppingCartModule</string>
     <string name="title_activity_shopping_cart">ShoppingCartActivity</string>
     <string name="current_session_id">session_id</string>
+
+    <string name="title_products">Products</string>
+    <string name="title_cart">Cart</string>
+
 </resources>

@@ -58,4 +58,16 @@ public class SampleProductEntity {
     }
 
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof SampleProductEntity) {
+            return (this.productId == ((SampleProductEntity) obj).getProductId());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return productId;
+    }
 }

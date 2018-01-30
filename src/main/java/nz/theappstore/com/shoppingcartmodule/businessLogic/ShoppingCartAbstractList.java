@@ -14,14 +14,19 @@ import rx.subjects.PublishSubject;
  * Can be subscribed on and the subscriber is notified with the list everytime the cart is updated
  */
 public abstract class ShoppingCartAbstractList<T> extends ArrayList<T> implements ShoppingCart<T> {
-    private HashMap<T, Integer> quantityMap = new HashMap<>();
+    private final HashMap<T, Integer> quantityMap = new HashMap<>();
     @Override
     public boolean add(T t) {
         if (!contains(t)) {
             quantityMap.put(t, 1);
             return super.add(t);
         } else {
-            quantityMap.put(t, quantityMap.get(t) + 1);
+            try {
+                int newQuantity = quantityMap.get(t) + 1;
+                quantityMap.put(t, newQuantity);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return false;
         }
     }

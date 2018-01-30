@@ -12,6 +12,8 @@ import nz.theappstore.com.shoppingcartmodule.businessLogic.Contracts.ShoppingCar
 import nz.theappstore.com.shoppingcartmodule.businessLogic.ShoppingCartImpl;
 import nz.theappstore.com.shoppingcartmodule.uiElements.viewHolders.CartItemViewHolder;
 import nz.theappstore.com.shoppingcartmodule.uiElements.util.SampleProductEntity;
+import rx.Completable;
+import rx.subjects.PublishSubject;
 
 /**
  * Created by vyomkeshjha on 12/5/17.
@@ -19,13 +21,15 @@ import nz.theappstore.com.shoppingcartmodule.uiElements.util.SampleProductEntity
 
 public class CartListAdapter extends RecyclerView.Adapter<CartItemViewHolder>{
 
-    ShoppingCart<SampleProductEntity> dataset;
+    ShoppingCart<SampleProductEntity> dataset = new ShoppingCartImpl();
+    PublishSubject<SampleProductEntity> increaseQuantityPipe;
+    PublishSubject<SampleProductEntity> decreaseQuantityPipe;
+    PublishSubject<SampleProductEntity> removeItemPipe;
 
-    public CartListAdapter(List<SampleProductEntity> datasetParam, int sessionId) {
-        for (SampleProductEntity productEntity: datasetParam) {
-            dataset.addItemToCart(productEntity); //Adds products to the cart
-        }
-        dataset = new ShoppingCartImpl();
+    public CartListAdapter() {
+        increaseQuantityPipe = PublishSubject.create();
+        decreaseQuantityPipe = PublishSubject.create();
+        removeItemPipe = PublishSubject.create();
     }
 
     @Override
@@ -38,14 +42,26 @@ public class CartListAdapter extends RecyclerView.Adapter<CartItemViewHolder>{
 
     @Override
     public void onBindViewHolder(CartItemViewHolder holder, int position) {
-        //TODO: here is where you take care of the showing part
-
         holder.getCurrentProductQuantityTextView().
-                setText(dataset.getProductQuantity(dataset.getItemFromCart(position)));
+                setText(String.valueOf(dataset.getProductQuantity(dataset.getItemFromCart(position))));
         holder.getProductDescription().
-                setText(dataset.getItemFromCart(position).getProductDescription());
+                setText(String.valueOf(dataset.getItemFromCart(position).getProductDescription()));
         holder.getProductName().
-                setText(dataset.getItemFromCart(position).getProductName());
+                setText(String.valueOf(dataset.getItemFromCart(position).getProductName()));
+
+
+        holder.getIncreaseProductCountTextView().setOnClickListener(view -> {
+            getIncreaseQuantityPipe().onNext(dataset.getItemFromCart(position));
+        });
+
+        holder.getReduceProductCountTextView().setOnClickListener(view -> {
+            getDecreaseQuantityPipe().onNext(dataset.getItemFromCart(position));
+        });
+
+        holder.getRemoveProductFromCart().setOnClickListener(view -> {
+            getRemoveItemPipe().onNext(dataset.getItemFromCart(position));
+        });
+        //TODO: setup event pipes
     }
 
     @Override
@@ -55,5 +71,17 @@ public class CartListAdapter extends RecyclerView.Adapter<CartItemViewHolder>{
 
     public void setDataset(ShoppingCart<SampleProductEntity> dataset) {
         this.dataset = dataset;
+    }
+
+    public PublishSubject<SampleProductEntity> getIncreaseQuantityPipe() {
+        return increaseQuantityPipe;
+    }
+
+    public PublishSubject<SampleProductEntity> getDecreaseQuantityPipe() {
+        return decreaseQuantityPipe;
+    }
+
+    public PublishSubject<SampleProductEntity> getRemoveItemPipe() {
+        return removeItemPipe;
     }
 }

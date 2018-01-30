@@ -22,12 +22,8 @@ public class CartItemViewHolder extends RecyclerView.ViewHolder {
     private final TextView productPriceTextView;
     private final ImageView removeProductFromCart;
 
-    private final CartListItemListener commonListener;
-
     public CartItemViewHolder(View itemView) {
         super(itemView);
-        commonListener = new CartListItemListener();
-
 
         productName = itemView.findViewById(R.id.product_name_textview);
         productDescription = itemView.findViewById(R.id.product_description_textview);
@@ -38,19 +34,9 @@ public class CartItemViewHolder extends RecyclerView.ViewHolder {
         productPriceTextView = itemView.findViewById(R.id.add_to_cart);
         removeProductFromCart = itemView.findViewById(R.id.delete_product_imageview);
 
-        setupListener();
     }
 
-    void setupListener() {
-        itemView.setOnClickListener(commonListener);
-        productName.setOnClickListener(commonListener);
-        currentProductQuantityTextView.setOnClickListener(commonListener);
-        reduceProductCountTextView.setOnClickListener(commonListener);
-        increaseProductCountTextView.setOnClickListener(commonListener);
-        productRateTextView.setOnClickListener(commonListener);
-        productPriceTextView.setOnClickListener(commonListener);
-        removeProductFromCart.setOnClickListener(commonListener);
-    }
+
 
     public TextView getProductName() {
         return productName;

@@ -20,6 +20,7 @@ import nz.theappstore.com.shoppingcartmodule.uiElements.viewModels.ShoppingCartV
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subjects.PublishSubject;
 
 /**
  * Created by vyomkeshjha on 12/4/17.
@@ -41,8 +42,14 @@ public class ProductListFragment extends Fragment {
         cartViewModel = ViewModelProviders.of(getActivity()).get(ShoppingCartViewModel.class);
         itemList.setSessionId(cartViewModel.getSessionId());
         dataAdapter.setProductList(itemList);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         setupCartListeners();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +62,9 @@ public class ProductListFragment extends Fragment {
         return listView;
     }
 
+    public PublishSubject pipeProductSelectionEventToActivity() {
+         return dataAdapter.getCurrentSubject();
+    }
 
     void setupCartListeners() {
         cartViewModel.getShoppingCart().getObservable().subscribe(new Observer<ShoppingCartImpl>() {
@@ -94,5 +104,10 @@ public class ProductListFragment extends Fragment {
                 dataAdapter.setProductList(sampleProductEntities);
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }

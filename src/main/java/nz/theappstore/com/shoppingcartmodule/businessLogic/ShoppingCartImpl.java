@@ -8,6 +8,8 @@ import rx.Completable;
 import rx.Observable;
 import rx.Observer;
 import rx.Single;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 
 /**
@@ -23,11 +25,35 @@ public class ShoppingCartImpl extends ShoppingCartAbstractList<SampleProductEnti
     private final PublishSubject<ShoppingCartImpl> onAdd;  //To return the entire new list when any operation is performed
     RepositoryImpl repository;
     int sessionId;
-    
+
     //TODO: pass the sessionId though the intent into the activity
     public ShoppingCartImpl() {
         this.onAdd = PublishSubject.create();
         this.repository = new RepositoryImpl();
+        synchronizeCartWithServer();
+    }
+
+    void synchronizeCartWithServer() {
+        this.repository.getCartForSession(sessionId)
+                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<List<SampleProductEntity>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<SampleProductEntity> sampleProductEntities) {
+                        removeAll();
+                        ShoppingCartImpl.this.addAll(sampleProductEntities);
+                    }
+                });
     }
 
     public void setSessionId(int sessionId) {
@@ -38,8 +64,9 @@ public class ShoppingCartImpl extends ShoppingCartAbstractList<SampleProductEnti
     @Override
     public Single<Integer> decreaseItemQuantity(SampleProductEntity item) {
         Observable<List<SampleProductEntity>> newList = repository.removeItemFromCart(sessionId, item.getProductId());
-        //TODO: update the local instance
-        newList.subscribe(new Observer<List<SampleProductEntity>>() {
+        newList.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<SampleProductEntity>>() {
             @Override
             public void onCompleted() {
                 onAdd.onNext(ShoppingCartImpl.this);
@@ -62,7 +89,9 @@ public class ShoppingCartImpl extends ShoppingCartAbstractList<SampleProductEnti
     @Override
     public Single<Integer> increaseItemQuantity(SampleProductEntity item) {
         Observable<List<SampleProductEntity>> newList = repository.addItemToCart(sessionId, item.getProductId());
-        newList.subscribe(new Observer<List<SampleProductEntity>>() {
+        newList.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<SampleProductEntity>>() {
             @Override
             public void onCompleted() {
                 onAdd.onNext(ShoppingCartImpl.this);
@@ -91,7 +120,9 @@ public class ShoppingCartImpl extends ShoppingCartAbstractList<SampleProductEnti
     @Override
     public Completable addItemToCart(SampleProductEntity item) {
         Observable<List<SampleProductEntity>> newList = repository.addItemToCart(sessionId, item.getProductId());
-        newList.subscribe(new Observer<List<SampleProductEntity>>() {
+        newList.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<SampleProductEntity>>() {
             @Override
             public void onCompleted() {
                 onAdd.onNext(ShoppingCartImpl.this);
@@ -134,7 +165,7 @@ public class ShoppingCartImpl extends ShoppingCartAbstractList<SampleProductEnti
 
     @Override
     public Observable<List<SampleProductEntity>> getListOfProductsInCart() {
-        return null;  //FIXME: what?
+        return repository.getCartForSession(sessionId);  //FIXME: what?
     }
 
     @Override
