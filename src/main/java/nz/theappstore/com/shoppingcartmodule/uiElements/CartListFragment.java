@@ -37,7 +37,7 @@ public class CartListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cartViewModel = ViewModelProviders.of(getActivity()).get(ShoppingCartViewModel.class);
-        cartViewModel.setSessionId(2);  //TODO: remove the hardcode
+
         itemList = cartViewModel.getShoppingCart();
         dataAdapter.setDataset(itemList);
 
@@ -63,6 +63,9 @@ public class CartListFragment extends Fragment {
                     }
                 });
         handleListEvents();
+    }
+    public void setViewModelSessionId(int sessionId) {
+        cartViewModel.setSessionId(sessionId);
     }
 
     @Nullable

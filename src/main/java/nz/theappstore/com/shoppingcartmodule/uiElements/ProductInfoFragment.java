@@ -30,7 +30,6 @@ public class ProductInfoFragment extends Fragment {
 
     public void setupItemPipe(SampleProductEntity currentProductEntity) {
         this.currentProductEntity = currentProductEntity;
-
     }
 
     @Nullable

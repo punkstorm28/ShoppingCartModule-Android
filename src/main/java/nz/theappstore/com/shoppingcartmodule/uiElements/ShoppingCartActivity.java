@@ -20,7 +20,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     ShoppingCartViewModel viewModel ;
     private int sessionId;
-    private UserEntity cartUser;
+    private UserEntity cartUser;   //TODO: pass this in the intent form the caller
     Intent passedIntent;
 
 
@@ -84,6 +84,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
         CartListFragment fragment = new CartListFragment();
+        fragment.setViewModelSessionId(sessionId);
         fragmentTransaction.add(R.id.shopping_cart_fragment_container, fragment);
         fragmentTransaction.commit();
     }
