@@ -24,13 +24,18 @@ public class ShoppingCartImpl extends ShoppingCartAbstractList<SampleProductEnti
 
     private final PublishSubject<ShoppingCartImpl> onAdd;  //To return the entire new list when any operation is performed
     RepositoryImpl repository;
-    int sessionId;
+
+    public int getSessionId() {
+        return sessionId;
+    }
+
+    private int sessionId;
 
     //TODO: pass the sessionId though the intent into the activity
+    //FIXME: initialization without setting the sessionId hurts a lot
     public ShoppingCartImpl() {
         this.onAdd = PublishSubject.create();
         this.repository = new RepositoryImpl();
-        synchronizeCartWithServer();
     }
 
     void synchronizeCartWithServer() {
@@ -51,13 +56,16 @@ public class ShoppingCartImpl extends ShoppingCartAbstractList<SampleProductEnti
                     @Override
                     public void onNext(List<SampleProductEntity> sampleProductEntities) {
                         removeAll();
-                        ShoppingCartImpl.this.addAll(sampleProductEntities);
+                        for (SampleProductEntity entity: sampleProductEntities) {
+                            ShoppingCartImpl.this.add(entity);
+                        }
                     }
                 });
     }
 
-    public void setSessionId(int sessionId) {
+    public void setSessionIdAndSync(int sessionId) {
         this.sessionId = sessionId;
+        synchronizeCartWithServer();
     }
 
 

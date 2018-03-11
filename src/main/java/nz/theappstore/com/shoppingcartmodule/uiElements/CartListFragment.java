@@ -15,7 +15,6 @@ import java.util.List;
 import nz.theappstore.com.shoppingcartmodule.R;
 import nz.theappstore.com.shoppingcartmodule.businessLogic.ShoppingCartImpl;
 import nz.theappstore.com.shoppingcartmodule.uiElements.adapters.CartListAdapter;
-import nz.theappstore.com.shoppingcartmodule.uiElements.adapters.ProductListAdapter;
 import nz.theappstore.com.shoppingcartmodule.uiElements.util.SampleProductEntity;
 import nz.theappstore.com.shoppingcartmodule.uiElements.viewModels.ShoppingCartViewModel;
 import rx.Observer;

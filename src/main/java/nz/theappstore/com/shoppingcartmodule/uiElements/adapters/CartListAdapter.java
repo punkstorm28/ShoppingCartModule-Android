@@ -5,14 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import nz.theappstore.com.shoppingcartmodule.R;
 import nz.theappstore.com.shoppingcartmodule.businessLogic.Contracts.ShoppingCart;
-import nz.theappstore.com.shoppingcartmodule.businessLogic.ShoppingCartImpl;
 import nz.theappstore.com.shoppingcartmodule.uiElements.viewHolders.CartItemViewHolder;
 import nz.theappstore.com.shoppingcartmodule.uiElements.util.SampleProductEntity;
-import rx.Completable;
 import rx.subjects.PublishSubject;
 
 /**
@@ -21,7 +17,7 @@ import rx.subjects.PublishSubject;
 
 public class CartListAdapter extends RecyclerView.Adapter<CartItemViewHolder>{
 
-    ShoppingCart<SampleProductEntity> dataset = new ShoppingCartImpl();
+    ShoppingCart<SampleProductEntity> dataset;
     PublishSubject<SampleProductEntity> increaseQuantityPipe;
     PublishSubject<SampleProductEntity> decreaseQuantityPipe;
     PublishSubject<SampleProductEntity> removeItemPipe;

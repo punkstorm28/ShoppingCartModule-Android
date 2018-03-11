@@ -30,7 +30,6 @@ public class ProductListFragment extends Fragment {
 
     ShoppingCartViewModel cartViewModel;
     ProductListAdapter dataAdapter = new ProductListAdapter();
-    ShoppingCartImpl itemList = new ShoppingCartImpl();
 
 
     RecyclerView recyclerViewList;
@@ -39,9 +38,10 @@ public class ProductListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //TODO: set up the observer on the data-set
+
         cartViewModel = ViewModelProviders.of(getActivity()).get(ShoppingCartViewModel.class);
-        itemList.setSessionId(cartViewModel.getSessionId());
-        dataAdapter.setProductList(itemList);
+        cartViewModel.setSessionId(2);
+        dataAdapter.setProductList(cartViewModel.getShoppingCart());
     }
 
     @Override
