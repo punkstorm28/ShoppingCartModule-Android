@@ -28,7 +28,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         BottomNavigationView navigation =  findViewById(R.id.navigation);
@@ -40,8 +40,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
         viewModel.setSessionId(sessionId);
 
         attachProductsListFragment();
-
-
     }
 
 

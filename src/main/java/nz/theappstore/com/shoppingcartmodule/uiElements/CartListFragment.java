@@ -30,14 +30,14 @@ public class CartListFragment extends Fragment {
     ShoppingCartViewModel cartViewModel;
     CartListAdapter dataAdapter = new CartListAdapter();
     ShoppingCartImpl itemList;
-
+    int sessionId;
     RecyclerView cartList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cartViewModel = ViewModelProviders.of(getActivity()).get(ShoppingCartViewModel.class);
-
+        cartViewModel.setSessionId(sessionId);
         itemList = cartViewModel.getShoppingCart();
         dataAdapter.setDataset(itemList);
 
@@ -53,7 +53,6 @@ public class CartListFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-
                     }
 
                     @Override
@@ -65,7 +64,7 @@ public class CartListFragment extends Fragment {
         handleListEvents();
     }
     public void setViewModelSessionId(int sessionId) {
-        cartViewModel.setSessionId(sessionId);
+        this.sessionId = sessionId;
     }
 
     @Nullable

@@ -18,6 +18,8 @@ import rx.subjects.PublishSubject;
  * Change this to the user's requirements
  *
  * On a successful operation, return onAdd with the new cart
+ *
+ * FIXME: some issue with sessionId retention?
  */
 
 public class ShoppingCartImpl extends ShoppingCartAbstractList<SampleProductEntity> {
