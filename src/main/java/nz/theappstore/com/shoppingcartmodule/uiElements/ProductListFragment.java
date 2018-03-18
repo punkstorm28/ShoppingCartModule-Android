@@ -15,6 +15,8 @@ import java.util.List;
 import nz.theappstore.com.shoppingcartmodule.R;
 import nz.theappstore.com.shoppingcartmodule.businessLogic.ShoppingCartImpl;
 import nz.theappstore.com.shoppingcartmodule.uiElements.adapters.ProductListAdapter;
+import nz.theappstore.com.shoppingcartmodule.uiElements.util.JobSessionBus;
+import nz.theappstore.com.shoppingcartmodule.uiElements.util.JobSessionLocal;
 import nz.theappstore.com.shoppingcartmodule.uiElements.util.SampleProductEntity;
 import nz.theappstore.com.shoppingcartmodule.uiElements.viewModels.ShoppingCartViewModel;
 import rx.Observer;
@@ -40,7 +42,22 @@ public class ProductListFragment extends Fragment {
         //TODO: set up the observer on the data-set
 
         cartViewModel = ViewModelProviders.of(getActivity()).get(ShoppingCartViewModel.class);
-        cartViewModel.setSessionId(2);
+        JobSessionBus.getSessionObservable().subscribe(new Observer<JobSessionLocal>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(JobSessionLocal jobSessionLocal) {
+                cartViewModel.setSessionId(jobSessionLocal.getSessionId());
+            }
+        });
         dataAdapter.setProductList(cartViewModel.getShoppingCart());
     }
 

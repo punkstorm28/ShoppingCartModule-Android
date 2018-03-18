@@ -12,13 +12,17 @@ import android.support.v7.widget.Toolbar;
 
 import nz.theappstore.com.shoppingcartmodule.R;
 import nz.theappstore.com.shoppingcartmodule.persistence.UserEntity;
+import nz.theappstore.com.shoppingcartmodule.uiElements.util.JobSessionBus;
+import nz.theappstore.com.shoppingcartmodule.uiElements.util.JobSessionLocal;
+import nz.theappstore.com.shoppingcartmodule.uiElements.util.JobWorkerBus;
 import nz.theappstore.com.shoppingcartmodule.uiElements.util.SampleProductEntity;
 import nz.theappstore.com.shoppingcartmodule.uiElements.viewModels.ShoppingCartViewModel;
 import rx.Observer;
+import rx.Subscriber;
 
 public class ShoppingCartActivity extends AppCompatActivity {
 
-    ShoppingCartViewModel viewModel ;
+    ShoppingCartViewModel viewModel;
     private int sessionId;
     private UserEntity cartUser;   //TODO: pass this in the intent form the caller
     Intent passedIntent;
@@ -31,24 +35,52 @@ public class ShoppingCartActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        BottomNavigationView navigation =  findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         viewModel = ViewModelProviders.of(this).get(ShoppingCartViewModel.class);
         passedIntent = getIntent();
-        sessionId = passedIntent.getIntExtra(getString(R.string.current_session_id),-1);
-        viewModel.setSessionId(sessionId);
+        JobSessionBus.getSessionObservable().subscribe(new Observer<JobSessionLocal>() {
+            @Override
+            public void onCompleted() {
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(JobSessionLocal jobSessionLocal) {
+                sessionId = jobSessionLocal.getSessionId();
+            }
+        });
+        JobWorkerBus.getObservableWorker().subscribe(new Observer<UserEntity>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(UserEntity userEntity) {
+                cartUser = userEntity;
+            }
+        });
         attachProductsListFragment();
     }
-
 
 
     void attachProductsListFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        for(Fragment fragment:fragmentManager.getFragments()){
+        for (Fragment fragment : fragmentManager.getFragments()) {
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
 
@@ -78,11 +110,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
     void attachCartFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        for(Fragment fragment:fragmentManager.getFragments()){
+        for (Fragment fragment : fragmentManager.getFragments()) {
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
         CartListFragment fragment = new CartListFragment();
-        fragment.setViewModelSessionId(sessionId);
         fragmentTransaction.add(R.id.shopping_cart_fragment_container, fragment);
         fragmentTransaction.commit();
     }
@@ -90,7 +121,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     void attachProductInfoFragment(SampleProductEntity currentProductEntity) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        for(Fragment fragment:fragmentManager.getFragments()){
+        for (Fragment fragment : fragmentManager.getFragments()) {
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
         ProductInfoFragment fragment = new ProductInfoFragment();
@@ -101,14 +132,14 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
-                int i = item.getItemId();
-                if (i == R.id.navigation_block_select) {
-                    attachProductsListFragment();
-                    return true;
-                } else if (i == R.id.preferences) {
-                    attachCartFragment();
-                    return true;
-                }
-                return false;
-            };
+        int i = item.getItemId();
+        if (i == R.id.navigation_block_select) {
+            attachProductsListFragment();
+            return true;
+        } else if (i == R.id.preferences) {
+            attachCartFragment();
+            return true;
+        }
+        return false;
+    };
 }

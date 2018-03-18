@@ -33,8 +33,6 @@ public class ShoppingCartImpl extends ShoppingCartAbstractList<SampleProductEnti
 
     private int sessionId;
 
-    //TODO: pass the sessionId though the intent into the activity
-    //FIXME: initialization without setting the sessionId hurts a lot
     public ShoppingCartImpl() {
         this.onAdd = PublishSubject.create();
         this.repository = new RepositoryImpl();

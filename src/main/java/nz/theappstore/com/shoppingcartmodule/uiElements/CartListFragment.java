@@ -15,6 +15,8 @@ import java.util.List;
 import nz.theappstore.com.shoppingcartmodule.R;
 import nz.theappstore.com.shoppingcartmodule.businessLogic.ShoppingCartImpl;
 import nz.theappstore.com.shoppingcartmodule.uiElements.adapters.CartListAdapter;
+import nz.theappstore.com.shoppingcartmodule.uiElements.util.JobSessionBus;
+import nz.theappstore.com.shoppingcartmodule.uiElements.util.JobSessionLocal;
 import nz.theappstore.com.shoppingcartmodule.uiElements.util.SampleProductEntity;
 import nz.theappstore.com.shoppingcartmodule.uiElements.viewModels.ShoppingCartViewModel;
 import rx.Observer;
@@ -30,16 +32,15 @@ public class CartListFragment extends Fragment {
     ShoppingCartViewModel cartViewModel;
     CartListAdapter dataAdapter = new CartListAdapter();
     ShoppingCartImpl itemList;
-    int sessionId;
     RecyclerView cartList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cartViewModel = ViewModelProviders.of(getActivity()).get(ShoppingCartViewModel.class);
-        cartViewModel.setSessionId(sessionId);
         itemList = cartViewModel.getShoppingCart();
         dataAdapter.setDataset(itemList);
+        itemList.removeAll();
 
         cartViewModel.getShoppingCart()
                 .getListOfProductsInCart()
@@ -62,9 +63,6 @@ public class CartListFragment extends Fragment {
                     }
                 });
         handleListEvents();
-    }
-    public void setViewModelSessionId(int sessionId) {
-        this.sessionId = sessionId;
     }
 
     @Nullable
