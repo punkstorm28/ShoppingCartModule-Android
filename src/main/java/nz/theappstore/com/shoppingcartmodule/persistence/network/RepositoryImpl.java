@@ -29,7 +29,7 @@ import rx.Observable;
 
 public class RepositoryImpl implements DataRepository {
     private static final String LOG_TAG = "Repository";
-    private static final String URL = "http://192.168.0.4:8080/";
+    private static final String URL = "http://107.150.52.219:8080/";
     private Retrofit retrofit;
     private UserAuthorizationRequests userAuthorizationRequests;
     CartManagementRequests cartManagementRequests;
