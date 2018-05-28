@@ -15,7 +15,7 @@ public class ShoppingCartViewModel extends ViewModel {
     private Observable<ShoppingCartImpl> observableCart;
     private int sessionId;
 
-    ShoppingCartViewModel() {
+    public ShoppingCartViewModel() {
 
     }
 
