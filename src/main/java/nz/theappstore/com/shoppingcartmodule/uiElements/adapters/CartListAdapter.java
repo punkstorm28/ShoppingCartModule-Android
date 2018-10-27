@@ -57,6 +57,8 @@ public class CartListAdapter extends RecyclerView.Adapter<CartItemViewHolder>{
         holder.getRemoveProductFromCart().setOnClickListener(view -> {
             getRemoveItemPipe().onNext(dataset.getItemFromCart(position));
         });
+
+        holder.getProductRateTextView().setText(String.format("$ %2.2f", dataset.getItemFromCart(position).getProductPrice()));
         //TODO: setup event pipes
     }
 

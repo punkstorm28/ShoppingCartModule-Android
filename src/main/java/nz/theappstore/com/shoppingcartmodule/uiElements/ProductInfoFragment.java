@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import nz.theappstore.com.shoppingcartmodule.R;
 import nz.theappstore.com.shoppingcartmodule.uiElements.util.SampleProductEntity;
@@ -44,6 +45,7 @@ public class ProductInfoFragment extends Fragment {
         productDescription.setText(currentProductEntity.getProductDescription());
         addToCartButton.setOnClickListener(view -> {
             cartViewModel.getShoppingCart().addItemToCart(currentProductEntity);
+            Toast.makeText(getContext(), "Added to cart!", Toast.LENGTH_SHORT).show(); //TODO: use a better way to do this
         });
 
         return fragmentLayout;

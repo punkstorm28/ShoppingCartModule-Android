@@ -26,7 +26,9 @@
             android:id="@+id/delete_product_imageview"
             android:paddingTop="7dp"
             android:src="@drawable/redcross"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginRight="5dp"
+            android:visibility="gone"
+            />
     </LinearLayout>
     <TextView
         android:layout_width="375dp"
@@ -123,7 +125,9 @@
             android:text="$9.80"
             android:paddingTop="7dp"
             android:paddingLeft="7dp"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:visibility="gone"
+            />
     </LinearLayout>
 
     <View
